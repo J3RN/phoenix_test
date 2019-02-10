@@ -1,4 +1,4 @@
-* TODO Create and decorate homepage
+* DONE Decorate homepage
 * TODO Scaffold schemas
 ** TODO Pharmacies.Pharmacy (name: string)
 ** TODO Pharmacies.Location (pharmacy_id, latitude: string, longitude: string)
