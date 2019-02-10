@@ -1,19 +1,18 @@
 * DONE Decorate homepage
 * TODO Scaffold schemas
 ** TODO Pharmacies.Pharmacy (name: string)
-** TODO Pharmacies.Location (pharmacy_id, latitude: string, longitude: string)
-** TODO Orders.Prescription (name: string)
-** TODO Orders.Patient (first_name: string, last_name: string)
-** TODO Orders.Order (patient_id, prescription_id, location_id)
-* TODO Create database seeds
 pharmacy1 = %Pharmacy{name: "Alfa Pharmacy"}
 pharmacy2 = %Pharmacy{name: "Bravo Pharmacy"}
+** TODO Pharmacies.Location (pharmacy_id, latitude: string, longitude: string)
 location1 = %Location{latitude: "39.9612", longitude: "82.9988"}
 location2 = %Location{latitude: "40.9612", longitude: "72.9988"}
+** TODO Orders.Prescription (name: string)
 prescription1 = %Prescription{name: "Allegra"}
 prescription2 = %Prescription{name: "Rolaids"}
+** TODO Orders.Patient (first_name: string, last_name: string)
 patient1 = %Patient{first_name: "First", last_name: "User"}
 patient2 = %Patient{first_name: "Second", last_name: "User"}
+** TODO Orders.Order (patient_id, prescription_id, location_id)
 * TODO Add Pharmacy authentication
 Do we need a separate "credential" schema?
 No, I don't think so. As an service external to their company, I would expect pharmacies to log in using credentials they create. It seems very unlikely that they would ever log in using social media accounts, some of which require the application to store OAuth tokens. Another likely case would be that they could sign in using SSO (which would have to be configured per client). Even under this architecture, systems I looked into (e.g. SAML) don't require the "service application" to store any kind of user credential.
