@@ -1,4 +1,5 @@
 * DONE Decorate homepage
+CLOCK: [2019-02-10 Sun 16:00]--[2019-02-10 Sun 16:20] =>  0:20
 * TODO Scaffold schemas
 ** TODO Pharmacies.Pharmacy (name: string)
 pharmacy1 = %Pharmacy{name: "Alfa Pharmacy"}

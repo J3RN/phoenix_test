@@ -17,10 +17,6 @@ defmodule TestWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :index
+    resources "/pharmacies", PharmacyController, except: [:index]
   end
-
-  # Other scopes may use custom stacks.
-  # scope "/api", TestWeb do
-  #   pipe_through :api
-  # end
 end

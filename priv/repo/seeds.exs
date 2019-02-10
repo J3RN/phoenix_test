@@ -9,3 +9,9 @@
 #
 # We recommend using the bang functions (`insert!`, `update!`
 # and so on) as they will fail if something goes wrong.
+
+alias Test.Repo
+alias Test.Pharmacies.Pharmacy
+
+pharmacy1 = Repo.insert!(%Pharmacy{name: "Alfa Pharmacy"})
+pharmacy2 = Repo.insert!(%Pharmacy{name: "Bravo Pharmacy"})
