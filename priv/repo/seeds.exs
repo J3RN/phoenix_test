@@ -11,7 +11,10 @@
 # and so on) as they will fail if something goes wrong.
 
 alias Test.Repo
-alias Test.Pharmacies.Pharmacy
+alias Test.Pharmacies.{Pharmacy, Location}
 
 pharmacy1 = Repo.insert!(%Pharmacy{name: "Alfa Pharmacy"})
 pharmacy2 = Repo.insert!(%Pharmacy{name: "Bravo Pharmacy"})
+
+location1 = Repo.insert!(%Location{latitude: "39.9612", longitude: "82.9988", pharmacy_id: pharmacy1.id})
+location2 = Repo.insert!(%Location{latitude: "40.9612", longitude: "72.9988", pharmacy_id: pharmacy2.id})

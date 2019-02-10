@@ -5,9 +5,11 @@ CLOCK: [2019-02-10 Sun 16:00]--[2019-02-10 Sun 16:20] =>  0:20
 CLOCK: [2019-02-10 Sun 16:40]--[2019-02-10 Sun 17:18] =>  0:38
 pharmacy1 = %Pharmacy{name: "Alfa Pharmacy"}
 pharmacy2 = %Pharmacy{name: "Bravo Pharmacy"}
-** TODO Pharmacies.Location (pharmacy_id, latitude: string, longitude: string)
+** DONE Pharmacies.Location (pharmacy_id, latitude: string, longitude: string)
+CLOCK: [2019-02-10 Sun 17:34]--[2019-02-10 Sun 18:10] =>  0:36
 location1 = %Location{latitude: "39.9612", longitude: "82.9988"}
 location2 = %Location{latitude: "40.9612", longitude: "72.9988"}
+** TODO Add and configure ex_machina
 ** TODO Orders.Prescription (name: string)
 prescription1 = %Prescription{name: "Allegra"}
 prescription2 = %Prescription{name: "Rolaids"}
@@ -39,3 +41,4 @@ No, I don't think so. As an service external to their company, I would expect ph
 * Notes
 ** The fixtures situation is a complete disaster. The generators generated two different kinds of fixtures, some for the context tests and some for the controller tests, but in different ways. Also, the generated fixtures for context tests breaks if you have multiple schemas per context that relate to one another (which I do). It's not that much of an edge-case. I'm going to use ExMachina instead.
 ** Plataformatec, the people who brought us Devise, have no authentication system for Phoenix, and poor devs like me have to write our own questionable implementations by hand.
+** Ecto's syntax to validate multi-column uniqueness constraints is unintuitive, and requires you to assign the constraint to only one column.

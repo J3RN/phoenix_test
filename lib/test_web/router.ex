@@ -18,5 +18,6 @@ defmodule TestWeb.Router do
 
     get "/", PageController, :index
     resources "/pharmacies", PharmacyController, except: [:index]
+    resources "/locations", LocationController
   end
 end
