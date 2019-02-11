@@ -33,7 +33,8 @@ CLOCK: [2019-02-10 Sun 23:54]--[2019-02-11 Mon 00:35] =>  0:41
 ** DONE Update Pharmacies.Pharmacy schema to validate passwords
 ** DONE Update Pharmacies.Pharmacy schema to hash passwords
 ** DONE Create SessionController with new, create, and delete actions
-** TODO Write SessionController.new template
+** DONE Write SessionController.new template
+CLOCK: [2019-02-11 Mon 00:44]--[2019-02-11 Mon 00:57] =>  0:13
 ** TODO Create test_web/controllers/auth.ex
 *** TODO Add logic to assign current_user if user_id cookie exists
 *** TODO Add 'authenticate' function to check session and potentially redirect to new session page
