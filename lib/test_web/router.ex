@@ -21,5 +21,6 @@ defmodule TestWeb.Router do
     resources "/locations", LocationController
     resources "/prescriptions", PrescriptionController
     resources "/patients", PatientController
+    resources "/orders", OrderController
   end
 end

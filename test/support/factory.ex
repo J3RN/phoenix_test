@@ -27,4 +27,12 @@ defmodule Test.Factory do
       last_name: "Kafka"
     }
   end
+
+  def order_factory do
+    %Test.Orders.Order{
+      patient: build(:patient),
+      prescription: build(:prescription),
+      location: build(:location)
+    }
+  end
 end
