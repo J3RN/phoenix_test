@@ -3,28 +3,28 @@ defmodule Test.Factory do
 
   def pharmacy_factory do
     %Test.Pharmacies.Pharmacy{
-      name: "CVS Pharmacy"
+      name: sequence("Pharmacy")
     }
   end
 
   def location_factory do
     %Test.Pharmacies.Location{
-      latitude: "39.9751",
-      longitude: "-83.0467",
+      latitude: sequence("39.975"),
+      longitude: sequence("-83.046"),
       pharmacy: build(:pharmacy)
     }
   end
 
   def prescription_factory do
     %Test.Orders.Prescription{
-      name: "Ativan"
+      name: sequence("Drug")
     }
   end
 
   def patient_factory do
     %Test.Orders.Patient{
-      first_name: "Franz",
-      last_name: "Kafka"
+      first_name: sequence("First"),
+      last_name: sequence("Last")
     }
   end
 
