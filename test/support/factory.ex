@@ -14,4 +14,10 @@ defmodule Test.Factory do
       pharmacy: build(:pharmacy)
     }
   end
+
+  def prescription_factory do
+    %Test.Orders.Prescription{
+      name: "Ativan"
+    }
+  end
 end

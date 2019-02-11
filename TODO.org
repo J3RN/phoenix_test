@@ -13,6 +13,7 @@ location2 = %Location{latitude: "40.9612", longitude: "72.9988"}
 CLOCK: [2019-02-10 Sun 20:30]--[2019-02-10 Sun 21:41] =>  1:11
 CLOCK: [2019-02-10 Sun 19:14]--[2019-02-10 Sun 19:19] =>  0:05
 ** TODO Orders.Prescription (name: string)
+CLOCK: [2019-02-10 Sun 21:43]--[2019-02-10 Sun 21:53] =>  0:10
 prescription1 = %Prescription{name: "Allegra"}
 prescription2 = %Prescription{name: "Rolaids"}
 ** TODO Orders.Patient (first_name: string, last_name: string)
