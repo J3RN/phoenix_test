@@ -26,7 +26,8 @@ CLOCK: [2019-02-10 Sun 22:28]--[2019-02-10 Sun 23:03] =>  0:35
 * TODO Add Pharmacy authentication
 Do we need a separate "credential" schema?
 No, I don't think so. As an service external to their company, I would expect pharmacies to log in using credentials they create. It seems very unlikely that they would ever log in using social media accounts, some of which require the application to store OAuth tokens. Another likely case would be that they could sign in using SSO (which would have to be configured per client). Even under this architecture, systems I looked into (e.g. SAML) don't require the "service application" to store any kind of user credential.
-** TODO Add comeonin and pbkdf2_elixir as dependencies
+** DONE Add comeonin and pbkdf2_elixir as dependencies
+CLOCK: [2019-02-10 Sun 23:53]--[2019-02-10 Sun 23:54] =>  0:01
 ** TODO Add password_hash field to "pharmacies" table
 ** TODO Update Pharmacies.Pharmacy schema to validate passwords
 ** TODO Update Pharmacies.Pharmacy schema to hash passwords
