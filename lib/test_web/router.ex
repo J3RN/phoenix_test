@@ -20,5 +20,6 @@ defmodule TestWeb.Router do
     resources "/pharmacies", PharmacyController, except: [:index]
     resources "/locations", LocationController
     resources "/prescriptions", PrescriptionController
+    resources "/patients", PatientController
   end
 end

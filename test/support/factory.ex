@@ -20,4 +20,11 @@ defmodule Test.Factory do
       name: "Ativan"
     }
   end
+
+  def patient_factory do
+    %Test.Orders.Patient{
+      first_name: "Franz",
+      last_name: "Kafka"
+    }
+  end
 end
