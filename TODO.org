@@ -9,7 +9,9 @@ pharmacy2 = %Pharmacy{name: "Bravo Pharmacy"}
 CLOCK: [2019-02-10 Sun 17:34]--[2019-02-10 Sun 18:10] =>  0:36
 location1 = %Location{latitude: "39.9612", longitude: "82.9988"}
 location2 = %Location{latitude: "40.9612", longitude: "72.9988"}
-** TODO Add and configure ex_machina
+** DONE Add and configure ex_machina
+CLOCK: [2019-02-10 Sun 20:30]--[2019-02-10 Sun 21:41] =>  1:11
+CLOCK: [2019-02-10 Sun 19:14]--[2019-02-10 Sun 19:19] =>  0:05
 ** TODO Orders.Prescription (name: string)
 prescription1 = %Prescription{name: "Allegra"}
 prescription2 = %Prescription{name: "Rolaids"}
@@ -42,3 +44,4 @@ No, I don't think so. As an service external to their company, I would expect ph
 ** The fixtures situation is a complete disaster. The generators generated two different kinds of fixtures, some for the context tests and some for the controller tests, but in different ways. Also, the generated fixtures for context tests breaks if you have multiple schemas per context that relate to one another (which I do). It's not that much of an edge-case. I'm going to use ExMachina instead.
 ** Plataformatec, the people who brought us Devise, have no authentication system for Phoenix, and poor devs like me have to write our own questionable implementations by hand.
 ** Ecto's syntax to validate multi-column uniqueness constraints is unintuitive, and requires you to assign the constraint to only one column.
+** ThoughtBot's ExMachina preloads associations by default. The generated Phoenix context implementations do not (and for good reason). The way the Phoenix generated tests compare context output to fixtures/factories is therefore incompatible with ExMachina.

@@ -1,16 +1,8 @@
 defmodule TestWeb.LocationControllerTest do
   use TestWeb.ConnCase
 
-  alias Test.Pharmacies
-
-  @create_attrs %{latitude: "some latitude", longitude: "some longitude"}
   @update_attrs %{latitude: "some updated latitude", longitude: "some updated longitude"}
   @invalid_attrs %{latitude: nil, longitude: nil}
-
-  def fixture(:location) do
-    {:ok, location} = Pharmacies.create_location(@create_attrs)
-    location
-  end
 
   describe "index" do
     test "lists all locations", %{conn: conn} do
@@ -28,7 +20,8 @@ defmodule TestWeb.LocationControllerTest do
 
   describe "create location" do
     test "redirects to show when data is valid", %{conn: conn} do
-      conn = post(conn, Routes.location_path(conn, :create), location: @create_attrs)
+      create_attrs = params_with_assocs(:location)
+      conn = post(conn, Routes.location_path(conn, :create), location: create_attrs)
 
       assert %{id: id} = redirected_params(conn)
       assert redirected_to(conn) == Routes.location_path(conn, :show, id)
@@ -82,7 +75,7 @@ defmodule TestWeb.LocationControllerTest do
   end
 
   defp create_location(_) do
-    location = fixture(:location)
+    location = insert(:location)
     {:ok, location: location}
   end
 end

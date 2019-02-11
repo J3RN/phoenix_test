@@ -1,16 +1,8 @@
 defmodule TestWeb.PharmacyControllerTest do
   use TestWeb.ConnCase
 
-  alias Test.Pharmacies
-
-  @create_attrs %{name: "some name"}
   @update_attrs %{name: "some updated name"}
   @invalid_attrs %{name: nil}
-
-  def fixture(:pharmacy) do
-    {:ok, pharmacy} = Pharmacies.create_pharmacy(@create_attrs)
-    pharmacy
-  end
 
   describe "new pharmacy" do
     test "renders form", %{conn: conn} do
@@ -21,7 +13,8 @@ defmodule TestWeb.PharmacyControllerTest do
 
   describe "create pharmacy" do
     test "redirects to show when data is valid", %{conn: conn} do
-      conn = post(conn, Routes.pharmacy_path(conn, :create), pharmacy: @create_attrs)
+      create_attrs = params_for(:pharmacy)
+      conn = post(conn, Routes.pharmacy_path(conn, :create), pharmacy: create_attrs)
 
       assert %{id: id} = redirected_params(conn)
       assert redirected_to(conn) == Routes.pharmacy_path(conn, :show, id)
@@ -75,7 +68,7 @@ defmodule TestWeb.PharmacyControllerTest do
   end
 
   defp create_pharmacy(_) do
-    pharmacy = fixture(:pharmacy)
+    pharmacy = insert(:pharmacy)
     {:ok, pharmacy: pharmacy}
   end
 end
