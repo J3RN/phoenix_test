@@ -38,7 +38,7 @@ defmodule Test.Pharmacies do
   """
   def create_pharmacy(attrs \\ %{}) do
     %Pharmacy{}
-    |> Pharmacy.changeset(attrs)
+    |> Pharmacy.registration_changeset(attrs)
     |> Repo.insert()
   end
 

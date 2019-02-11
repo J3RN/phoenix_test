@@ -14,8 +14,8 @@ alias Test.Repo
 alias Test.Pharmacies.{Pharmacy, Location}
 alias Test.Orders.{Prescription, Patient, Order}
 
-pharmacy1 = Repo.insert!(%Pharmacy{name: "Alfa Pharmacy"})
-pharmacy2 = Repo.insert!(%Pharmacy{name: "Bravo Pharmacy"})
+pharmacy1 = Repo.insert!(%Pharmacy{name: "Alfa Pharmacy", password_hash: "asdfadsf"})
+pharmacy2 = Repo.insert!(%Pharmacy{name: "Bravo Pharmacy", password_hash: "12345678"})
 
 location1 = Repo.insert!(%Location{latitude: "39.9612", longitude: "82.9988", pharmacy_id: pharmacy1.id})
 location2 = Repo.insert!(%Location{latitude: "40.9612", longitude: "72.9988", pharmacy_id: pharmacy2.id})
