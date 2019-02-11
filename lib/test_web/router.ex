@@ -17,6 +17,7 @@ defmodule TestWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :index
+    resources "/sessions", SessionController, only: [:new, :create, :delete]
     resources "/pharmacies", PharmacyController, except: [:index]
     resources "/locations", LocationController
     resources "/prescriptions", PrescriptionController
