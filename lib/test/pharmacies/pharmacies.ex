@@ -25,6 +25,24 @@ defmodule Test.Pharmacies do
   def get_pharmacy!(id), do: Repo.get!(Pharmacy, id)
 
   @doc """
+  Gets a single pharmacy with the given attributes.
+
+  Returns `nil` if no matching pharmacy is found.
+
+  ## Examples
+
+      iex> get_pharmacy_by(%{name: "A Pharmacy"})
+      %Pharmacy{name: "Fred"}
+
+      iex> get_pharmacy_by(%{name: "Non-existant"})
+      nil
+
+  """
+  def get_pharmacy_by(attrs) do
+    Repo.get_by(Pharmacy, attrs)
+  end
+
+  @doc """
   Creates a pharmacy.
 
   ## Examples
@@ -74,6 +92,30 @@ defmodule Test.Pharmacies do
   """
   def delete_pharmacy(%Pharmacy{} = pharmacy) do
     Repo.delete(pharmacy)
+  end
+
+  @doc """
+  Verifies whether the credentials are legitimate.
+
+  Returns either `{:ok, pharmacy}` or `{:error, reason}`.
+
+  Seriously, Comeonin is a beautiful, beautiful library.
+
+  ## Examples
+
+      iex> authenticate_pharmacy("Foo Pharmacy", "password")
+      {:ok, %Pharmacy{}}
+
+      iex> authenticate_pharmacy("Foo Pharmacy", "bad password")
+      {:error, "invalid password"}
+
+      iex> authenticate_pharmacy("Nonsense", "a password")
+      {:error, "invalid user-identifier"}
+
+  """
+  def authenticate_pharmacy(name, password) do
+    pharmacy = get_pharmacy_by(%{name: name})
+    Comeonin.Pbkdf2.check_pass(pharmacy, password)
   end
 
   @doc """

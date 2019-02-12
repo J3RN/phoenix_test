@@ -16,6 +16,17 @@ defmodule Test.PharmaciesTest do
       assert retrieved_pharmacy.id == pharmacy.id
     end
 
+    test "get_pharmacy_by/1 returns the pharmacy with the given attributes" do
+      pharmacy = insert(:pharmacy)
+      retrieved_pharmacy = Pharmacies.get_pharmacy_by(%{name: pharmacy.name})
+      assert %Pharmacy{} = retrieved_pharmacy
+      assert retrieved_pharmacy.id == pharmacy.id
+    end
+
+    test "get_pharmacy_by/1 returns nil if the pharmacy with the given attributes cannot be found" do
+      assert Pharmacies.get_pharmacy_by(%{name: "A Pharmacy"}) == nil
+    end
+
     test "create_pharmacy/1 with valid data creates a pharmacy" do
       valid_attrs = params_for(:pharmacy)
       assert {:ok, %Pharmacy{} = pharmacy} = Pharmacies.create_pharmacy(valid_attrs)
@@ -44,6 +55,22 @@ defmodule Test.PharmaciesTest do
       pharmacy = insert(:pharmacy)
       assert {:ok, %Pharmacy{}} = Pharmacies.delete_pharmacy(pharmacy)
       assert_raise Ecto.NoResultsError, fn -> Pharmacies.get_pharmacy!(pharmacy.id) end
+    end
+
+    test "authenticate_pharmacy/2 returns the pharmacy if creds are correct" do
+      password = "foobar"
+      pharmacy = insert(:pharmacy, %{password_hash: Comeonin.Pbkdf2.hashpwsalt(password)})
+
+      assert {:ok, %Pharmacy{} = retrieved_pharmacy} = Pharmacies.authenticate_pharmacy(pharmacy.name, password)
+      assert retrieved_pharmacy.id == pharmacy.id
+    end
+
+    test "authenticate_pharmacy/2 returns an error if the creds are incorrect" do
+      password = "foobar"
+      incorrect_password = "barbaz"
+      pharmacy = insert(:pharmacy, %{password_hash: Comeonin.Pbkdf2.hashpwsalt(password)})
+
+      assert {:error, _} = Pharmacies.authenticate_pharmacy(pharmacy.name, incorrect_password)
     end
 
     test "change_pharmacy/1 returns a pharmacy changeset" do
