@@ -35,7 +35,7 @@ CLOCK: [2019-02-10 Sun 23:54]--[2019-02-11 Mon 00:35] =>  0:41
 ** DONE Create SessionController with new, create, and delete actions
 ** DONE Implement SessionController.new
 CLOCK: [2019-02-11 Mon 00:44]--[2019-02-11 Mon 00:57] =>  0:13
-** DONE Create test_web/controllers/auth.ex
+** DONE Create TestWeb.Auth
 CLOCK: [2019-02-11 Mon 21:40]--[2019-02-11 Mon 22:02] =>  0:22
 CLOCK: [2019-02-11 Mon 21:13]--[2019-02-11 Mon 21:38] =>  0:25
 CLOCK: [2019-02-11 Mon 19:31]--[2019-02-11 Mon 21:04] =>  1:33
@@ -46,7 +46,8 @@ CLOCK: [2019-02-11 Mon 19:00]--[2019-02-11 Mon 19:26] =>  0:26
 *** DONE Add 'authenticate_pharmacy' function to verify credentials
 *** DONE Add 'logout' function
 *** DONE Write tests
-** TODO Implement SessionController.create
+** DONE Add TestWeb.Auth plug to pipeline
+** DONE Implement SessionController.create
 ** TODO Implement SessionController.delete
 ** TODO Add register, login, and logout links to page layout
 ** TODO Restrict access to all but the SessionController and PharmacyController.new to authenticated users

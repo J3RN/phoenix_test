@@ -4,6 +4,8 @@ defmodule TestWeb.Auth do
   alias TestWeb.Router.Helpers, as: Routes
   alias Test.Pharmacies
 
+  def init(opts), do: opts
+
   def call(conn, _opts) do
     pharmacy_id = get_session(conn, "pharmacy_id")
     pharmacy = pharmacy_id && Pharmacies.get_pharmacy!(pharmacy_id)
