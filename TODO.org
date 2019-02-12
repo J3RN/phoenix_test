@@ -51,6 +51,8 @@ CLOCK: [2019-02-11 Mon 19:00]--[2019-02-11 Mon 19:26] =>  0:26
 CLOCK: [2019-02-11 Mon 22:43]--[2019-02-11 Mon 22:43] =>  0:00
 ** DONE Implement SessionController.delete
 CLOCK: [2019-02-11 Mon 22:43]--[2019-02-11 Mon 23:02] =>  0:19
+** DONE Login a newly created Pharmacy
+CLOCK: [2019-02-11 Mon 23:02]--[2019-02-11 Mon 23:04] =>  0:02
 ** TODO Add register, login, and logout links to page layout
 ** TODO Restrict access to all but the SessionController and PharmacyController.new to authenticated users
 ** TODO Scope all locations to the current pharmacy

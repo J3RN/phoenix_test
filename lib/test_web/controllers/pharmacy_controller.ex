@@ -13,6 +13,7 @@ defmodule TestWeb.PharmacyController do
     case Pharmacies.create_pharmacy(pharmacy_params) do
       {:ok, pharmacy} ->
         conn
+        |> TestWeb.Auth.login(pharmacy)
         |> put_flash(:info, "Pharmacy created successfully.")
         |> redirect(to: Routes.pharmacy_path(conn, :show, pharmacy))
 
