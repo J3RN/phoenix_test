@@ -7,7 +7,7 @@ defmodule TestWeb.PharmacyControllerTest do
   describe "new pharmacy" do
     test "renders form", %{conn: conn} do
       conn = get(conn, Routes.pharmacy_path(conn, :new))
-      assert html_response(conn, 200) =~ "New Pharmacy"
+      assert html_response(conn, 200) =~ "Register Pharmacy"
     end
   end
 
@@ -25,7 +25,7 @@ defmodule TestWeb.PharmacyControllerTest do
 
     test "renders errors when data is invalid", %{conn: conn} do
       conn = post(conn, Routes.pharmacy_path(conn, :create), pharmacy: @invalid_attrs)
-      assert html_response(conn, 200) =~ "New Pharmacy"
+      assert html_response(conn, 200) =~ "Register Pharmacy"
     end
   end
 

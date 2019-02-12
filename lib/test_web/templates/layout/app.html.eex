@@ -10,7 +10,21 @@
   <body>
     <header>
       <section class="container">
-        <nav role="navigation"></nav>
+        <nav role="navigation">
+          <ul>
+            <%= if @current_pharmacy do %>
+              <li><%= @current_pharmacy.name %></li>
+              <li>
+                <%= link "Logout", to: Routes.session_path(@conn, :delete, @current_pharmacy), method: :delete %>
+              </li>
+            <% else %>
+              <li>
+                <%= link "Login", to: Routes.session_path(@conn, :new) %>
+                <%= link "Register", to: Routes.pharmacy_path(@conn, :new) %>
+              </li>
+            <% end %>
+          </ul>
+        </nav>
         J3RN's Test Phoenix Application
       </section>
     </header>
