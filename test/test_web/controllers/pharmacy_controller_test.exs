@@ -16,10 +16,9 @@ defmodule TestWeb.PharmacyControllerTest do
       create_attrs = params_for(:pharmacy)
       conn = post(conn, Routes.pharmacy_path(conn, :create), pharmacy: create_attrs)
 
-      assert %{id: id} = redirected_params(conn)
-      assert redirected_to(conn) == Routes.pharmacy_path(conn, :show, id)
+      assert redirected_to(conn) == Routes.order_path(conn, :index)
 
-      conn = get(conn, Routes.pharmacy_path(conn, :show, id))
+      conn = get(conn, Routes.pharmacy_path(conn, :show, conn.assigns.current_pharmacy.id))
       assert html_response(conn, 200) =~ "Show Pharmacy"
     end
 
@@ -67,8 +66,10 @@ defmodule TestWeb.PharmacyControllerTest do
     end
   end
 
-  defp create_pharmacy(_) do
+  defp create_pharmacy(%{conn: conn}) do
     pharmacy = insert(:pharmacy)
-    {:ok, pharmacy: pharmacy}
+    conn = put_session(conn, "pharmacy_id", pharmacy.id)
+
+    %{conn: conn, pharmacy: pharmacy}
   end
 end

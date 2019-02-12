@@ -4,6 +4,8 @@ defmodule TestWeb.PharmacyController do
   alias Test.Pharmacies
   alias Test.Pharmacies.Pharmacy
 
+  plug :verify_ownership when action in [:show, :edit, :update, :delete]
+
   def new(conn, _params) do
     changeset = Pharmacies.change_pharmacy(%Pharmacy{})
     render(conn, "new.html", changeset: changeset)
@@ -15,7 +17,7 @@ defmodule TestWeb.PharmacyController do
         conn
         |> TestWeb.Auth.login(pharmacy)
         |> put_flash(:info, "Pharmacy created successfully.")
-        |> redirect(to: Routes.pharmacy_path(conn, :show, pharmacy))
+        |> redirect(to: Routes.order_path(conn, :index))
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "new.html", changeset: changeset)
@@ -54,5 +56,16 @@ defmodule TestWeb.PharmacyController do
     conn
     |> put_flash(:info, "Pharmacy deleted successfully.")
     |> redirect(to: Routes.page_path(conn, :index))
+  end
+
+  def verify_ownership(conn, _opts) do
+    if String.to_integer(conn.params["id"]) == conn.assigns.current_pharmacy.id do
+      conn
+    else
+      conn
+      |> put_flash(:error, "That's not yours!")
+      |> redirect(to: Routes.pharmacy_path(conn, :show, conn.assigns.current_pharmacy))
+      |> halt()
+    end
   end
 end
