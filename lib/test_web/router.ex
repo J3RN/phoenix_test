@@ -1,13 +1,19 @@
 defmodule TestWeb.Router do
   use TestWeb, :router
 
+  @auth_module Application.get_env(:test, :auth)
+
+  defp authenticate(conn, _opts) do
+    @auth_module.authenticate(conn)
+  end
+
   pipeline :browser do
     plug :accepts, ["html"]
     plug :fetch_session
     plug :fetch_flash
     plug :protect_from_forgery
     plug :put_secure_browser_headers
-    plug TestWeb.Auth
+    plug @auth_module
   end
 
   pipeline :api do

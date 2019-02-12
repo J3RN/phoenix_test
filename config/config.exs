@@ -8,6 +8,7 @@
 use Mix.Config
 
 config :test,
+  auth: TestWeb.Auth,
   ecto_repos: [Test.Repo]
 
 # Configures the endpoint

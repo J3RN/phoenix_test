@@ -34,12 +34,12 @@ defmodule TestWeb.AuthTest do
     end
   end
 
-  describe "authenticate/2" do
+  describe "authenticate/1" do
     test "halts the request if the user does not have a valid session", %{conn: conn} do
       conn =
         conn
         |> assign(:current_pharmacy, nil)
-        |> TestWeb.Auth.authenticate([])
+        |> TestWeb.Auth.authenticate()
 
       assert conn.halted
     end
@@ -50,7 +50,7 @@ defmodule TestWeb.AuthTest do
       conn =
         conn
         |> assign(:current_pharmacy, pharmacy)
-        |> TestWeb.Auth.authenticate([])
+        |> TestWeb.Auth.authenticate()
 
       refute conn.halted
     end

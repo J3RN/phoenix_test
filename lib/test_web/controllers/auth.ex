@@ -12,7 +12,7 @@ defmodule TestWeb.Auth do
     assign(conn, :current_pharmacy, pharmacy)
   end
 
-  def authenticate(conn, _opts) do
+  def authenticate(conn) do
     if conn.assigns.current_pharmacy do
       conn
     else
