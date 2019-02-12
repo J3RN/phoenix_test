@@ -110,16 +110,39 @@ defmodule Test.OrdersTest do
 
     @invalid_attrs %{patient_id: nil}
 
-    test "list_orders/0 returns all orders" do
-      order = insert(:order)
-      assert [%Order{} = retrieved_order] = Orders.list_orders()
+    setup do
+      pharmacy = insert(:pharmacy)
+      location = insert(:location, pharmacy: pharmacy)
+
+      %{pharmacy: pharmacy, location: location}
+    end
+
+    test "list_orders_for_pharmacy/1 returns orders for the pharmacy", %{location: location} do
+      order = insert(:order, location: location)
+      assert [%Order{} = retrieved_order] = Orders.list_orders_for_pharmacy(location.pharmacy)
       assert matching_order?(retrieved_order, order)
     end
 
-    test "get_order!/1 returns the order with given id" do
-      order = insert(:order)
-      assert %Order{} = retrieved_order = Orders.get_order!(order.id)
+    test "list_orders_for_pharmacy/1 does not return orders for other pharmacies", %{location: location} do
+      order = insert(:order, location: location)
+      _other_order = insert(:order)
+
+      assert [%Order{} = retrieved_order] = Orders.list_orders_for_pharmacy(location.pharmacy)
       assert matching_order?(retrieved_order, order)
+    end
+
+    test "get_order_for_pharmacy!/1 returns the order with given id", %{location: location} do
+      order = insert(:order, location: location)
+      assert %Order{} = retrieved_order = Orders.get_order_for_pharmacy!(order.id, location.pharmacy)
+      assert matching_order?(retrieved_order, order)
+    end
+
+    test "get_order_for_pharmacy!/1 does not return orders for other pharmacies", %{location: location} do
+      order = insert(:order)
+
+      assert_raise Ecto.NoResultsError, fn ->
+        Orders.get_order_for_pharmacy!(order.id, location.pharmacy)
+      end
     end
 
     test "create_order/1 with valid data creates a order" do
@@ -138,16 +161,18 @@ defmodule Test.OrdersTest do
       assert matching_order?(retrieved_order, update_attrs)
     end
 
-    test "update_order/2 with invalid data returns error changeset" do
-      order = insert(:order)
+    test "update_order/2 with invalid data returns error changeset", %{location: location} do
+      order = insert(:order, %{location: location})
       assert {:error, %Ecto.Changeset{}} = Orders.update_order(order, @invalid_attrs)
-      assert matching_order?(order, Orders.get_order!(order.id))
+      assert matching_order?(order, Orders.get_order_for_pharmacy!(order.id, location.pharmacy))
     end
 
-    test "delete_order/1 deletes the order" do
+    test "delete_order/1 deletes the order", %{location: location} do
       order = insert(:order)
       assert {:ok, %Order{}} = Orders.delete_order(order)
-      assert_raise Ecto.NoResultsError, fn -> Orders.get_order!(order.id) end
+      assert_raise Ecto.NoResultsError, fn ->
+        Orders.get_order_for_pharmacy!(order.id, location.pharmacy)
+      end
     end
 
     test "change_order/1 returns a order changeset" do

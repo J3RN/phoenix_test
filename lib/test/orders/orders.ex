@@ -7,6 +7,7 @@ defmodule Test.Orders do
   alias Test.Repo
 
   alias Test.Orders.Prescription
+  alias Test.Pharmacies.Pharmacy
 
   @doc """
   Returns the list of prescriptions.
@@ -200,37 +201,42 @@ defmodule Test.Orders do
 
   alias Test.Orders.Order
 
+  defp orders_for_pharmacy(pharmacy_id) do
+    from(
+      o in Order,
+      join: l in assoc(o, :location),
+      where: l.pharmacy_id == ^pharmacy_id
+    )
+  end
+
   @doc """
-  Returns the list of orders.
+  Returns the list of orders for the given pharmacy.
 
   ## Examples
 
-      iex> list_orders()
-      [%Order{}, ...]
+      iex> list_orders_for_pharmacy(%Pharmacy{id: 1, ...})
+      [%Order{}, ....]
 
   """
-  def list_orders do
-    Order
+  def list_orders_for_pharmacy(%Pharmacy{id: pharmacy_id}) do
+    pharmacy_id
+    |> orders_for_pharmacy()
     |> Repo.all()
     |> Repo.preload([:patient, :prescription, :location])
   end
 
   @doc """
-  Gets a single order.
-
-  Raises `Ecto.NoResultsError` if the Order does not exist.
+  Gets a single order if it is associated to the given pharmacy.
 
   ## Examples
 
-      iex> get_order!(123)
+      iex> get_order_for_pharmacy!(1, %Pharmacy{id: 1, ...})
       %Order{}
 
-      iex> get_order!(456)
-      ** (Ecto.NoResultsError)
-
   """
-  def get_order!(id) do
-    Order
+  def get_order_for_pharmacy!(id, %Pharmacy{id: pharmacy_id}) do
+    pharmacy_id
+    |> orders_for_pharmacy()
     |> Repo.get!(id)
     |> Repo.preload([:patient, :prescription, :location])
   end

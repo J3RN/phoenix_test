@@ -23,7 +23,7 @@ patient2 = %Patient{first_name: "Second", last_name: "User"}
 ** DONE Orders.Order (patient_id, prescription_id, location_id)
 CLOCK: [2019-02-10 Sun 23:16]--[2019-02-10 Sun 23:32] =>  0:16
 CLOCK: [2019-02-10 Sun 22:28]--[2019-02-10 Sun 23:03] =>  0:35
-* TODO Add Pharmacy authentication
+* DONE Add Pharmacy authentication
 Do we need a separate "credential" schema?
 No, I don't think so. As an service external to their company, I would expect pharmacies to log in using credentials they create. It seems very unlikely that they would ever log in using social media accounts, some of which require the application to store OAuth tokens. Another likely case would be that they could sign in using SSO (which would have to be configured per client). Even under this architecture, systems I looked into (e.g. SAML) don't require the "service application" to store any kind of user credential.
 ** DONE Add comeonin and pbkdf2_elixir as dependencies
@@ -56,12 +56,14 @@ CLOCK: [2019-02-11 Mon 23:02]--[2019-02-11 Mon 23:04] =>  0:02
 ** DONE Add register, login, and logout links to page layout
 ** DONE Restrict access to all but the SessionController and PharmacyController.new to authenticated users
 CLOCK: [2019-02-11 Mon 23:12]--[2019-02-11 Mon 23:53] =>  0:41
-** TODO Scope all locations to the current pharmacy
-** TODO Update locations 'create' to use current pharmacy as pharmacy_id
+** TODO Scope all access to the current pharmacy
+CLOCK: [2019-02-12 Tue 00:45]--[2019-02-12 Tue 01:41] =>  0:56
+CLOCK: [2019-02-11 Mon 23:57]--[2019-02-12 Tue 00:41] =>  0:44
 * TODO Write README
 * Things to add
 ** Password confirmation field
 ** Sorting and filtering of orders
+** Ownership controls for creating orders
 * Notes
 ** The fixtures situation is a complete disaster. The generators generated two different kinds of fixtures, some for the context tests and some for the controller tests, but in different ways. Also, the generated fixtures for context tests breaks if you have multiple schemas per context that relate to one another (which I do). It's not that much of an edge-case. I'm going to use ExMachina instead.
 ** Plataformatec, the people who brought us Devise, have no authentication system for Phoenix, and poor devs like me have to write our own questionable implementations by hand.
