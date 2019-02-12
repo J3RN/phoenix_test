@@ -35,16 +35,21 @@ CLOCK: [2019-02-10 Sun 23:54]--[2019-02-11 Mon 00:35] =>  0:41
 ** DONE Create SessionController with new, create, and delete actions
 ** DONE Implement SessionController.new
 CLOCK: [2019-02-11 Mon 00:44]--[2019-02-11 Mon 00:57] =>  0:13
-** TODO Create test_web/controllers/auth.ex
-*** TODO Add 'call' function to assign current_user if user_id cookie exists
-*** TODO Add 'authenticate' function to check session and potentially redirect to new session page
-*** TODO Add 'login' function to take a user and set their user_id session and current_user
-*** TODO Add 'authenticate_pharmacy' function to verify credentials and call 'login' if correct
-*** TODO Add 'logout' function
+** DONE Create test_web/controllers/auth.ex
+CLOCK: [2019-02-11 Mon 21:40]--[2019-02-11 Mon 22:02] =>  0:22
+CLOCK: [2019-02-11 Mon 21:13]--[2019-02-11 Mon 21:38] =>  0:25
+CLOCK: [2019-02-11 Mon 19:31]--[2019-02-11 Mon 21:04] =>  1:33
+CLOCK: [2019-02-11 Mon 19:00]--[2019-02-11 Mon 19:26] =>  0:26
+*** DONE Add 'call' function to assign current_user if user_id cookie exists
+*** DONE Add 'authenticate' function to check session and potentially redirect to new session page
+*** DONE Add 'login' function to take a user and set their user_id session and current_user
+*** DONE Add 'authenticate_pharmacy' function to verify credentials
+*** DONE Add 'logout' function
+*** DONE Write tests
 ** TODO Implement SessionController.create
 ** TODO Implement SessionController.delete
-** TODO Restrict access to all but the SessionController and PharmacyController.new to authenticated users
 ** TODO Add register, login, and logout links to page layout
+** TODO Restrict access to all but the SessionController and PharmacyController.new to authenticated users
 ** TODO Scope all locations to the current pharmacy
 ** TODO Update locations 'create' to use current pharmacy as pharmacy_id
 * TODO Write README
