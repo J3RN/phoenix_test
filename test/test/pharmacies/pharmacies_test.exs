@@ -85,17 +85,36 @@ defmodule Test.PharmaciesTest do
     @update_attrs %{latitude: "12.345", longitude: "98.765"}
     @invalid_attrs %{latitude: nil, longitude: nil}
 
-    test "list_locations/0 returns all locations" do
+    test "list_locations_for_pharmacy/1 returns all locations for the pharmacy" do
       location = insert(:location)
-      assert [%Location{} = retrieved_location] = Pharmacies.list_locations()
+      assert [%Location{} = retrieved_location] = Pharmacies.list_locations_for_pharmacy(location.pharmacy)
       assert retrieved_location.id == location.id
     end
 
-    test "get_location!/1 returns the location with given id" do
+    test "list_locations_for_pharmacy/1 does not return locations for other pharmacies" do
+      pharmacy = insert(:pharmacy)
+      location = insert(:location, %{pharmacy: pharmacy})
+
+      other_pharmacy = insert(:pharmacy)
+      _other_location = insert(:location, %{pharmacy: other_pharmacy})
+
+      assert [%Location{} = retrieved_location] = Pharmacies.list_locations_for_pharmacy(location.pharmacy)
+      assert retrieved_location.id == location.id
+    end
+
+    test "get_location_for_pharmacy!/2 returns the location with given id for the pharmacy" do
       location = insert(:location)
-      retrieved_location = Pharmacies.get_location!(location.id)
+      retrieved_location = Pharmacies.get_location_for_pharmacy!(location.id, location.pharmacy)
       assert %Location{} = retrieved_location
       assert retrieved_location.id == location.id
+    end
+
+    test "get_location_for_pharmacy!/2 will not return a location for another pharmacy" do
+      location = insert(:location)
+      new_pharmacy = insert(:pharmacy)
+      assert_raise Ecto.NoResultsError, fn ->
+        Pharmacies.get_location_for_pharmacy!(location.id, new_pharmacy)
+      end
     end
 
     test "create_location/1 with valid data creates a location" do
@@ -121,7 +140,7 @@ defmodule Test.PharmaciesTest do
       location_attrs = params_for(:location)
       location = insert(:location, location_attrs)
       assert {:error, %Ecto.Changeset{}} = Pharmacies.update_location(location, @invalid_attrs)
-      assert %Location{} = retrieved_location = Pharmacies.get_location!(location.id)
+      assert %Location{} = retrieved_location = Pharmacies.get_location_for_pharmacy!(location.id, location.pharmacy)
       assert retrieved_location.latitude == location_attrs[:latitude]
       assert retrieved_location.longitude == location_attrs[:longitude]
     end
@@ -129,7 +148,9 @@ defmodule Test.PharmaciesTest do
     test "delete_location/1 deletes the location" do
       location = insert(:location)
       assert {:ok, %Location{}} = Pharmacies.delete_location(location)
-      assert_raise Ecto.NoResultsError, fn -> Pharmacies.get_location!(location.id) end
+      assert_raise Ecto.NoResultsError, fn ->
+        Pharmacies.get_location_for_pharmacy!(location.id, location.pharmacy)
+      end
     end
 
     test "change_location/1 returns a location changeset" do

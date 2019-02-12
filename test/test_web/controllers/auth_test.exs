@@ -3,17 +3,6 @@ defmodule TestWeb.AuthTest do
   import Test.Factory
   alias Test.Pharmacies.Pharmacy
 
-  defp configure_session(%{conn: conn}) do
-    conn =
-      conn
-      |> Plug.Test.init_test_session(%{})
-      |> fetch_flash()
-
-    %{conn: conn}
-  end
-
-  setup :configure_session
-
   describe "call/2" do
     test "assigns the current_pharmacy to the pharmacy if there is a session", %{conn: conn} do
       pharmacy = insert(:pharmacy)

@@ -134,33 +134,34 @@ defmodule Test.Pharmacies do
   alias Test.Pharmacies.Location
 
   @doc """
-  Returns the list of locations.
+  Get a list of locations for the given pharmacy
 
   ## Examples
 
-      iex> list_locations()
+      iex> list_locations_for_pharmacy(%Pharmacy{id: 1, ...})
       [%Location{}, ...]
 
   """
-  def list_locations do
-    Repo.all(Location)
+  def list_locations_for_pharmacy(%Pharmacy{id: pharmacy_id}) do
+    Location
+    |> where(pharmacy_id: ^pharmacy_id)
+    |> Repo.all()
   end
 
   @doc """
-  Gets a single location.
-
-  Raises `Ecto.NoResultsError` if the Location does not exist.
+  Get a single location for the given pharmacy
 
   ## Examples
 
-      iex> get_location!(123)
+      iex> get_location_for_pharmacy!(1, %Pharmacy{id: 1, ...})
       %Location{}
 
-      iex> get_location!(456)
-      ** (Ecto.NoResultsError)
-
   """
-  def get_location!(id), do: Repo.get!(Location, id)
+  def get_location_for_pharmacy!(id, %Pharmacy{id: pharmacy_id}) do
+    Location
+    |> where(pharmacy_id: ^pharmacy_id)
+    |> Repo.get!(id)
+  end
 
   @doc """
   Creates a location.

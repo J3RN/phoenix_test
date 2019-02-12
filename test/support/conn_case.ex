@@ -34,6 +34,11 @@ defmodule TestWeb.ConnCase do
       Ecto.Adapters.SQL.Sandbox.mode(Test.Repo, {:shared, self()})
     end
 
-    {:ok, conn: Phoenix.ConnTest.build_conn()}
+    conn =
+      Phoenix.ConnTest.build_conn()
+      |> Plug.Test.init_test_session(%{})
+      |> Phoenix.ConnTest.fetch_flash()
+
+    {:ok, conn: conn}
   end
 end

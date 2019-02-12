@@ -20,7 +20,10 @@ defmodule TestWeb.LocationControllerTest do
 
   describe "create location" do
     test "redirects to show when data is valid", %{conn: conn} do
-      create_attrs = params_with_assocs(:location)
+      pharmacy = insert(:pharmacy)
+      conn = put_session(conn, "pharmacy_id", pharmacy.id)
+
+      create_attrs = params_for(:location)
       conn = post(conn, Routes.location_path(conn, :create), location: create_attrs)
 
       assert %{id: id} = redirected_params(conn)
@@ -74,8 +77,12 @@ defmodule TestWeb.LocationControllerTest do
     end
   end
 
-  defp create_location(_) do
+  defp create_location(%{conn: conn}) do
     location = insert(:location)
-    {:ok, location: location}
+
+    %{
+      conn: put_session(conn, "pharmacy_id", location.pharmacy.id),
+      location: location
+    }
   end
 end
