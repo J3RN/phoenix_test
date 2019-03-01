@@ -12,8 +12,14 @@ defmodule TestWeb.PharmacyControllerTest do
   end
 
   describe "create pharmacy" do
-    test "redirects to show when data is valid", %{conn: conn} do
-      create_attrs = params_for(:pharmacy)
+    test "redirects to show with successful create", %{conn: conn} do
+      password = "asdfasdf"
+
+      create_attrs =
+        params_for(:pharmacy)
+        |> Map.put(:password, password)
+        |> Map.put(:password_confirmation, password)
+
       conn = post(conn, Routes.pharmacy_path(conn, :create), pharmacy: create_attrs)
 
       assert redirected_to(conn) == Routes.order_path(conn, :index)
@@ -24,6 +30,22 @@ defmodule TestWeb.PharmacyControllerTest do
 
     test "renders errors when data is invalid", %{conn: conn} do
       conn = post(conn, Routes.pharmacy_path(conn, :create), pharmacy: @invalid_attrs)
+      assert html_response(conn, 200) =~ "Register Pharmacy"
+    end
+
+    test "renders errors when password confirmation does not match", %{conn: conn} do
+      pharmacy_params =
+        params_for(:pharmacy)
+        |> Map.put(:password, "asdfasdf")
+        |> Map.put(:password_confirmation, "foobar1")
+
+      conn = post(conn, Routes.pharmacy_path(conn, :create), pharmacy: pharmacy_params)
+      assert html_response(conn, 200) =~ "Register Pharmacy"
+    end
+
+    test "renders errors when password confirmation is missing", %{conn: conn} do
+      pharmacy_params = Map.put(params_for(:pharmacy), :password, "adsfadsf")
+      conn = post(conn, Routes.pharmacy_path(conn, :create), pharmacy: pharmacy_params)
       assert html_response(conn, 200) =~ "Register Pharmacy"
     end
   end
@@ -60,9 +82,10 @@ defmodule TestWeb.PharmacyControllerTest do
     test "deletes chosen pharmacy", %{conn: conn, pharmacy: pharmacy} do
       conn = delete(conn, Routes.pharmacy_path(conn, :delete, pharmacy))
       assert redirected_to(conn) == Routes.page_path(conn, :index)
-      assert_error_sent 404, fn ->
+
+      assert_error_sent(404, fn ->
         get(conn, Routes.pharmacy_path(conn, :show, pharmacy))
-      end
+      end)
     end
   end
 

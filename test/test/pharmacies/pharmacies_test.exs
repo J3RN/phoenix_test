@@ -28,7 +28,13 @@ defmodule Test.PharmaciesTest do
     end
 
     test "create_pharmacy/1 with valid data creates a pharmacy" do
-      valid_attrs = params_for(:pharmacy)
+      password = "asdfasdf"
+
+      valid_attrs =
+        params_for(:pharmacy)
+        |> Map.put(:password, password)
+        |> Map.put(:password_confirmation, password)
+
       assert {:ok, %Pharmacy{} = pharmacy} = Pharmacies.create_pharmacy(valid_attrs)
       assert pharmacy.name == valid_attrs[:name]
     end
@@ -61,7 +67,9 @@ defmodule Test.PharmaciesTest do
       password = "foobar"
       pharmacy = insert(:pharmacy, %{password_hash: Comeonin.Pbkdf2.hashpwsalt(password)})
 
-      assert {:ok, %Pharmacy{} = retrieved_pharmacy} = Pharmacies.authenticate_pharmacy(pharmacy.name, password)
+      assert {:ok, %Pharmacy{} = retrieved_pharmacy} =
+               Pharmacies.authenticate_pharmacy(pharmacy.name, password)
+
       assert retrieved_pharmacy.id == pharmacy.id
     end
 
@@ -87,7 +95,10 @@ defmodule Test.PharmaciesTest do
 
     test "list_locations_for_pharmacy/1 returns all locations for the pharmacy" do
       location = insert(:location)
-      assert [%Location{} = retrieved_location] = Pharmacies.list_locations_for_pharmacy(location.pharmacy)
+
+      assert [%Location{} = retrieved_location] =
+               Pharmacies.list_locations_for_pharmacy(location.pharmacy)
+
       assert retrieved_location.id == location.id
     end
 
@@ -98,7 +109,9 @@ defmodule Test.PharmaciesTest do
       other_pharmacy = insert(:pharmacy)
       _other_location = insert(:location, %{pharmacy: other_pharmacy})
 
-      assert [%Location{} = retrieved_location] = Pharmacies.list_locations_for_pharmacy(location.pharmacy)
+      assert [%Location{} = retrieved_location] =
+               Pharmacies.list_locations_for_pharmacy(location.pharmacy)
+
       assert retrieved_location.id == location.id
     end
 
@@ -112,6 +125,7 @@ defmodule Test.PharmaciesTest do
     test "get_location_for_pharmacy!/2 will not return a location for another pharmacy" do
       location = insert(:location)
       new_pharmacy = insert(:pharmacy)
+
       assert_raise Ecto.NoResultsError, fn ->
         Pharmacies.get_location_for_pharmacy!(location.id, new_pharmacy)
       end
@@ -140,7 +154,11 @@ defmodule Test.PharmaciesTest do
       location_attrs = params_for(:location)
       location = insert(:location, location_attrs)
       assert {:error, %Ecto.Changeset{}} = Pharmacies.update_location(location, @invalid_attrs)
-      assert %Location{} = retrieved_location = Pharmacies.get_location_for_pharmacy!(location.id, location.pharmacy)
+
+      assert %Location{} =
+               retrieved_location =
+               Pharmacies.get_location_for_pharmacy!(location.id, location.pharmacy)
+
       assert retrieved_location.latitude == location_attrs[:latitude]
       assert retrieved_location.longitude == location_attrs[:longitude]
     end
@@ -148,6 +166,7 @@ defmodule Test.PharmaciesTest do
     test "delete_location/1 deletes the location" do
       location = insert(:location)
       assert {:ok, %Location{}} = Pharmacies.delete_location(location)
+
       assert_raise Ecto.NoResultsError, fn ->
         Pharmacies.get_location_for_pharmacy!(location.id, location.pharmacy)
       end

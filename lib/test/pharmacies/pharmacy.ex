@@ -16,6 +16,7 @@ defmodule Test.Pharmacies.Pharmacy do
     pharmacy
     |> cast(attrs, [:name, :password])
     |> validate_required([:name, :password])
+    |> validate_confirmation(:password, required: true, message: "Does not match password")
     |> unique_constraint(:name)
     |> validate_length(:password, min: 8, max: 100)
     |> put_pass_hash()

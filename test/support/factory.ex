@@ -4,7 +4,6 @@ defmodule Test.Factory do
   def pharmacy_factory do
     %Test.Pharmacies.Pharmacy{
       name: sequence("Pharmacy"),
-      password: sequence("password"),
       password_hash: sequence("$pbkdf2-sha512$160000$password")
     }
   end

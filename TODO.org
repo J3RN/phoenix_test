@@ -62,9 +62,14 @@ CLOCK: [2019-02-12 Tue 00:45]--[2019-02-12 Tue 01:41] =>  0:56
 CLOCK: [2019-02-11 Mon 23:57]--[2019-02-12 Tue 00:41] =>  0:44
 * TODO Write README
 * Things to add
-** Password confirmation field
-** Sorting and filtering of orders
-** Ownership controls for creating orders
+** DONE Password confirmation field
+*** DONE Add new field to form
+*** DONE Add password_confirmation as virtual field
+*** DONE Add validation that password and confirmation match
+*** DONE Add tests
+** TODO Sorting and filtering of orders
+** TODO Ownership controls for creating orders
+** TODO Persistent navigation links in layout
 * Notes
 ** The fixtures situation is a complete disaster. The generators generated two different kinds of fixtures, some for the context tests and some for the controller tests, but in different ways. Also, the generated fixtures for context tests breaks if you have multiple schemas per context that relate to one another (which I do). It's not that much of an edge-case. I'm going to use ExMachina instead.
 ** Plataformatec, the people who brought us Devise, have no authentication system for Phoenix, and poor devs like me have to write our own questionable implementations by hand.
