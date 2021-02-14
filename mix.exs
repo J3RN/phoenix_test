@@ -45,6 +45,7 @@ defmodule Test.MixProject do
       {:plug_cowboy, "~> 2.0"},
       {:comeonin, "~> 4.1"},
       {:pbkdf2_elixir, "~> 0.12.3"},
+      {:dialyxir, "~> 0.5.1"},
 
       # Test deps
       {:ex_machina, "~> 2.2", only: :test}
